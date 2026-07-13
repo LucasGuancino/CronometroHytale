@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tempo de conteúdo restante em Hytale</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    text-align:center;
+}
+
+.container{
+    max-width:900px;
+    padding:40px;
+}
+
+h1{
+    font-size:3rem;
+    margin-bottom:40px;
+}
+
+#contador{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.bloco{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:15px;
+    padding:25px;
+    min-width:140px;
+    backdrop-filter:blur(6px);
+}
+
+.numero{
+    font-size:3rem;
+    font-weight:bold;
+}
+
+.texto{
+    margin-top:8px;
+    color:#cbd5e1;
+    font-size:1rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.info{
+    margin-top:40px;
+    color:#94a3b8;
+    font-size:1rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Tempo de conteúdo restante em Hytale</h1>
+
+<div id="contador">
+
+<div class="bloco">
+<div class="numero" id="dias">0</div>
+<div class="texto">Dias</div>
+</div>
+
+<div class="bloco">
+<div class="numero" id="horas">0</div>
+<div class="texto">Horas</div>
+</div>
+
+<div class="bloco">
+<div class="numero" id="minutos">0</div>
+<div class="texto">Minutos</div>
+</div>
+
+<div class="bloco">
+<div class="numero" id="segundos">0</div>
+<div class="texto">Segundos</div>
+</div>
+
+</div>
+
+<div class="info">
+Início: 13/01/2026 • Fim: 13/01/2036
+</div>
+
+</div>
+
+<script>
+
+const inicio = new Date("2026-01-13T00:00:00");
+const fim = new Date("2036-01-13T00:00:00");
+
+function atualizar(){
+
+    const agora = new Date();
+
+    let restante = fim - agora;
+
+    if(restante <= 0){
+
+        document.getElementById("dias").textContent = "0";
+        document.getElementById("horas").textContent = "00";
+        document.getElementById("minutos").textContent = "00";
+        document.getElementById("segundos").textContent = "00";
+
+        return;
+    }
+
+    const dias = Math.floor(restante / (1000*60*60*24));
+    restante %= (1000*60*60*24);
+
+    const horas = Math.floor(restante / (1000*60*60));
+    restante %= (1000*60*60);
+
+    const minutos = Math.floor(restante / (1000*60));
+    restante %= (1000*60);
+
+    const segundos = Math.floor(restante / 1000);
+
+    document.getElementById("dias").textContent = dias;
+    document.getElementById("horas").textContent = String(horas).padStart(2,"0");
+    document.getElementById("minutos").textContent = String(minutos).padStart(2,"0");
+    document.getElementById("segundos").textContent = String(segundos).padStart(2,"0");
+
+}
+
+atualizar();
+setInterval(atualizar,1000);
+
+</script>
+
+</body>
+</html>
